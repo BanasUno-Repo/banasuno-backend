@@ -22,5 +22,5 @@ echo Fetching data from %BACKEND_URL% ...
 if errorlevel 1 exit /b 1
 
 echo Running weighted heat risk pipeline ...
-%PY% weighted_heat_risk_pipeline.py --input barangay_data_today.csv --no-rolling --output barangay_heat_risk_today.csv
+%PY% weighted_heat_risk_pipeline.py --input barangay_data_today.csv --no-rolling --output barangay_heat_risk_today.csv --upload
 exit /b %errorlevel%

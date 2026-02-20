@@ -6,20 +6,22 @@ A reference to **business logic, formulas, and numeric/conditional computations*
 
 ## 1. Heat risk model (PAGASA)
 
-**File:** `src/services/heatRiskModel.js`
+**File:** `src/services/heatRiskModel.js`  
+**Model basis and references:** See **docs/HEAT-RISK-MODEL-BASIS.md** (NOAA Rothfusz, PAGASA, Estoque et al. 2020, Reid et al. 2009).
 
 | What | Where | Formula / logic |
 |------|--------|------------------|
-| **Clamp** | `clamp(x, min, max)` | `Math.min(max, Math.max(min, x))` – bound value to [min, max]. |
+| **Heat index (validated)** | `src/lib/heatIndex.js` | NOAA Rothfusz (NWS SR 90-23): T °C + RH % → HI °C. Used when `opts.humidityByBarangay` provided; then HI is input to PAGASA. |
 | **Round to 1 decimal** | `round1(x)` | `Math.round(x * 10) / 10`. |
-| **PAGASA level + score** | `tempToPAGASALevel(tempC)` | Temp bands: &lt;27 → level 1 (0.1); 27–32 → 0.2 + (t-27)/5*0.2; 33–41 → 0.4 + (t-33)/8*0.2; 42–51 → 0.6 + (t-42)/9*0.2; ≥52 → 0.8 + min(0.2, (t-52)/20). |
-| **City average** | `assessBarangayHeatRisk` | `computedAvg = sum(temps) / count` when `opts.averageTemp` not set. |
-| **Delta vs average** | per barangay | `delta = temp - avg`; `deltaAdj = clamp(delta * 0.03, -0.15, 0.15)` – small score adjustment by deviation from city average. |
-| **Final risk score** | per barangay | `score = clamp(pagasa.score + deltaAdj, 0, 1)`; then `round1(score)`. |
+| **PAGASA level** | `tempToPAGASALevel(tempC)` | Input is HI °C (when humidity used) or air temp °C. Bands: &lt;27 → 1; 27–32 → 2; 33–41 → 3; 42–51 → 4; ≥52 → 5. |
+| **Risk score (validated)** | `scoreFromLevel(level)` | `score = (level − 1) / 4` so level 1→0, 2→0.25, 3→0.5, 4→0.75, 5→1. No delta or density in score. |
+| **City average** | `assessBarangayHeatRisk` | `computedAvg = sum(temps) / count` when `opts.averageTemp` not set; used only for `delta_c` (informational). |
+| **Delta vs average** | per barangay | `delta_c = temp - avg` (reported only; not used in score). |
+| **Population/density** | `src/lib/populationByBarangay.js` | Match GeoJSON `adm4_en` to PSA 2020; `density = population / area_km2`. Reported in risk object when available; not used in score. |
 | **Counts by level** | `counts` | Increment `not_hazardous`, `caution`, `extreme_caution`, `danger`, `extreme_danger` from PAGASA label. |
 | **Min/max score** | aggregation | `minScore` / `maxScore` over all barangay scores. |
 
-**Constants:** `HEAT_LEVELS` (5 levels: Not Hazardous, Caution, Extreme Caution, Danger, Extreme Danger) with ranges and colors.
+**Constants:** `HEAT_LEVELS` (5 levels). Score uses only validated PAGASA level.
 
 ---
 

@@ -2,14 +2,17 @@
 """
 Weighted heat risk pipeline.
 
-Uses barangay_data.csv (barangay_id, date, temperature, facility_distance)
+Uses barangay_data.csv (barangay_id, date, temperature, facility_distance, optional population/density)
 from API-backed data. Computes 7-day rolling averages, normalizes features,
 runs K-Means (k=5), then assigns PAGASA risk levels 1–5 by weighted severity.
 
-Weights: temperature 0.6, facility 0.4.
+Weights: equal weights (EWA) – 1/3 each when 3 features (temp, facility, density), 1/2 each when 2 features.
+Temperature: use heat index °C when fetch script got it from backend (validated); else air temp.
+Computational basis: docs/PIPELINE-COMPUTATIONAL-BASIS.md.
 """
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -20,7 +23,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 def load_data(path: str) -> pd.DataFrame:
-    """Load CSV with required columns: barangay_id, date, temperature, facility_distance (or facility_score)."""
+    """Load CSV with required columns: barangay_id, date, temperature, facility_distance (or facility_score). Optional: population, density."""
     df = pd.read_csv(path)
     for col in ["barangay_id", "date", "temperature", "facility_distance"]:
         if col not in df.columns and col != "facility_distance":
@@ -29,6 +32,10 @@ def load_data(path: str) -> pd.DataFrame:
         df["facility_distance"] = df["facility_score"]
     elif "facility_distance" not in df.columns:
         raise ValueError("Missing column: facility_distance or facility_score")
+    if "density" not in df.columns:
+        df["density"] = 0.0
+    if "population" not in df.columns:
+        df["population"] = 0
     return df
 
 
@@ -51,9 +58,15 @@ def prepare_features(
         df["temp_rolling"] = df["temperature"]
 
     df["facility_score"] = df["facility_distance"]
+    df["density"] = pd.to_numeric(df["density"], errors="coerce").fillna(0)
 
-    feature_cols = ["temp_rolling", "facility_score"]
-    weights = np.array([0.6, 0.4])
+    has_density = df["density"].gt(0).any()
+    if has_density:
+        feature_cols = ["temp_rolling", "facility_score", "density"]
+        weights = np.array([1.0 / 3, 1.0 / 3, 1.0 / 3])  # Equal weight approach (EWA), validated
+    else:
+        feature_cols = ["temp_rolling", "facility_score"]
+        weights = np.array([0.5, 0.5])  # Equal weight approach (EWA), validated
 
     features = df[feature_cols].copy()
     features = features.fillna(features.mean(numeric_only=True))
@@ -89,7 +102,7 @@ def main() -> int:
     parser.add_argument(
         "--input",
         default="barangay_data.csv",
-        help="Input CSV (barangay_id, date, temperature, facility_distance)",
+        help="Input CSV (barangay_id, date, temperature, facility_distance, optional population/density)",
     )
     parser.add_argument(
         "--output",
@@ -103,6 +116,11 @@ def main() -> int:
     )
     parser.add_argument("--window", type=int, default=7, help="Rolling window size (default 7)")
     parser.add_argument("--clusters", type=int, default=5, help="K-Means clusters (default 5)")
+    parser.add_argument(
+        "--upload",
+        action="store_true",
+        help="Upload report CSV to backend (BACKEND_URL) for frontend download; optional PIPELINE_REPORT_WRITER_KEY",
+    )
     args = parser.parse_args()
 
     input_path = Path(args.input)
@@ -123,6 +141,28 @@ def main() -> int:
     df_latest = df[df["date"] == latest_date][["barangay_id", "risk_level", "cluster"]]
     df_latest.to_csv(args.output, index=False)
     print(f"Latest date: {latest_date}; wrote {len(df_latest)} rows to {args.output}", flush=True)
+
+    # Optional: upload report to backend so users can download via frontend (no file in repo).
+    backend_url = os.environ.get("BACKEND_URL", "").rstrip("/")
+    if backend_url and args.upload:
+        try:
+            import requests
+            csv_path = Path(args.output)
+            if csv_path.exists():
+                csv_body = csv_path.read_text(encoding="utf-8")
+                url = f"{backend_url}/api/heat/davao/pipeline-report"
+                headers = {"Content-Type": "text/csv"}
+                key = os.environ.get("PIPELINE_REPORT_WRITER_KEY")
+                if key:
+                    headers["x-pipeline-report-key"] = key
+                r = requests.post(url, data=csv_body, headers=headers, timeout=30)
+                r.raise_for_status()
+                print("Uploaded report to backend; users can download via GET /api/heat/davao/pipeline-report.", flush=True)
+            else:
+                print("Output file not found, skip upload.", file=sys.stderr)
+        except Exception as e:
+            print(f"Upload failed (report is still in {args.output}): {e}", file=sys.stderr)
+            # Do not fail the pipeline; upload is optional.
 
     return 0
 

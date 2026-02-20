@@ -6,3 +6,7 @@ node_modules/
 
 # Supabase CLI generated (project ref, pooler URL, etc.)
 supabase/.temp/
+
+# AI pipeline generated (report is uploaded to backend for frontend download)
+ai/barangay_data_today.csv
+ai/barangay_heat_risk_today.csv

@@ -11,7 +11,7 @@ const METEOSOURCE_BASE = "https://www.meteosource.com/api/v1/free";
  * @param {string} apiKey - Meteosource API key
  * @param {number} lat - Latitude (decimal)
  * @param {number} lon - Longitude (decimal)
- * @returns {Promise<{ temp_c: number, feels_like?: number, summary?: string } | null>}
+ * @returns {Promise<{ temp_c: number, humidity?: number, feels_like?: number, summary?: string } | null>}
  */
 export async function getCurrentWeather(apiKey, lat, lon) {
   if (!apiKey || lat == null || lon == null) return null;
@@ -28,9 +28,11 @@ export async function getCurrentWeather(apiKey, lat, lon) {
   const current = data?.current;
   if (!current || typeof current.temperature !== "number") return null;
 
-  return {
+  const out = {
     temp_c: current.temperature,
     feels_like: current.feels_like,
     summary: current.summary,
   };
+  if (typeof current.humidity === "number") out.humidity = current.humidity;
+  return out;
 }

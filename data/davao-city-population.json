@@ -1,0 +1,922 @@
+{
+  "source": "Philippine Statistics Authority",
+  "title": "Davao City population by barangay (2024)",
+  "publicationUrl": "https://library.psa.gov.ph/cgi-bin/koha/opac-detail.pl?biblionumber=35858",
+  "asOf": "2024",
+  "province": "Davao del Sur",
+  "city": "City of Davao",
+  "municipality": null,
+  "total": 1848947,
+  "barangays": [
+    {
+      "barangay": "Acacia",
+      "population": 3861,
+      "barangay_normalized": "Acacia"
+    },
+    {
+      "barangay": "Agdao",
+      "population": 7064,
+      "barangay_normalized": "Agdao"
+    },
+    {
+      "barangay": "Alambre",
+      "population": 3314,
+      "barangay_normalized": "Alambre"
+    },
+    {
+      "barangay": "Alejandra Navarro (Lasang)",
+      "population": 11893,
+      "barangay_normalized": "Alejandra Navarro"
+    },
+    {
+      "barangay": "Alfonso Angliongto Sr.",
+      "population": 15611,
+      "barangay_normalized": "Alfonso Angliongto Sr."
+    },
+    {
+      "barangay": "Angalan",
+      "population": 3319,
+      "barangay_normalized": "Angalan"
+    },
+    {
+      "barangay": "Atan-Awe",
+      "population": 1507,
+      "barangay_normalized": "Atan-Awe"
+    },
+    {
+      "barangay": "Baganihan",
+      "population": 2126,
+      "barangay_normalized": "Baganihan"
+    },
+    {
+      "barangay": "Bago Aplaya",
+      "population": 18515,
+      "barangay_normalized": "Bago Aplaya"
+    },
+    {
+      "barangay": "Bago Gallera",
+      "population": 21409,
+      "barangay_normalized": "Bago Gallera"
+    },
+    {
+      "barangay": "Bago Oshiro",
+      "population": 19169,
+      "barangay_normalized": "Bago Oshiro"
+    },
+    {
+      "barangay": "Baguio",
+      "population": 5807,
+      "barangay_normalized": "Baguio"
+    },
+    {
+      "barangay": "Balengaeng",
+      "population": 2444,
+      "barangay_normalized": "Balengaeng"
+    },
+    {
+      "barangay": "Baliok",
+      "population": 18118,
+      "barangay_normalized": "Baliok"
+    },
+    {
+      "barangay": "Bangkas Heights",
+      "population": 8410,
+      "barangay_normalized": "Bangkas Heights"
+    },
+    {
+      "barangay": "Bantol",
+      "population": 2158,
+      "barangay_normalized": "Bantol"
+    },
+    {
+      "barangay": "Baracatan",
+      "population": 3460,
+      "barangay_normalized": "Baracatan"
+    },
+    {
+      "barangay": "Barangay 1-A",
+      "population": 2582,
+      "barangay_normalized": "Barangay 1-A"
+    },
+    {
+      "barangay": "Barangay 2-A",
+      "population": 2913,
+      "barangay_normalized": "Barangay 2-A"
+    },
+    {
+      "barangay": "Barangay 3-A",
+      "population": 531,
+      "barangay_normalized": "Barangay 3-A"
+    },
+    {
+      "barangay": "Barangay 4-A",
+      "population": 1749,
+      "barangay_normalized": "Barangay 4-A"
+    },
+    {
+      "barangay": "Barangay 5-A",
+      "population": 11321,
+      "barangay_normalized": "Barangay 5-A"
+    },
+    {
+      "barangay": "Barangay 6-A",
+      "population": 2250,
+      "barangay_normalized": "Barangay 6-A"
+    },
+    {
+      "barangay": "Barangay 7-A",
+      "population": 3621,
+      "barangay_normalized": "Barangay 7-A"
+    },
+    {
+      "barangay": "Barangay 8-A",
+      "population": 16460,
+      "barangay_normalized": "Barangay 8-A"
+    },
+    {
+      "barangay": "Barangay 9-A",
+      "population": 7738,
+      "barangay_normalized": "Barangay 9-A"
+    },
+    {
+      "barangay": "Barangay 10-A",
+      "population": 8982,
+      "barangay_normalized": "Barangay 10-A"
+    },
+    {
+      "barangay": "Barangay 11-B",
+      "population": 2399,
+      "barangay_normalized": "Barangay 11-B"
+    },
+    {
+      "barangay": "Barangay 12-B",
+      "population": 1249,
+      "barangay_normalized": "Barangay 12-B"
+    },
+    {
+      "barangay": "Barangay 13-B",
+      "population": 443,
+      "barangay_normalized": "Barangay 13-B"
+    },
+    {
+      "barangay": "Barangay 14-B",
+      "population": 2312,
+      "barangay_normalized": "Barangay 14-B"
+    },
+    {
+      "barangay": "Barangay 15-B",
+      "population": 2228,
+      "barangay_normalized": "Barangay 15-B"
+    },
+    {
+      "barangay": "Barangay 16-B",
+      "population": 453,
+      "barangay_normalized": "Barangay 16-B"
+    },
+    {
+      "barangay": "Barangay 17-B",
+      "population": 969,
+      "barangay_normalized": "Barangay 17-B"
+    },
+    {
+      "barangay": "Barangay 18-B",
+      "population": 1024,
+      "barangay_normalized": "Barangay 18-B"
+    },
+    {
+      "barangay": "Barangay 19-B",
+      "population": 32836,
+      "barangay_normalized": "Barangay 19-B"
+    },
+    {
+      "barangay": "Barangay 20-B",
+      "population": 5256,
+      "barangay_normalized": "Barangay 20-B"
+    },
+    {
+      "barangay": "Barangay 21-C",
+      "population": 7336,
+      "barangay_normalized": "Barangay 21-C"
+    },
+    {
+      "barangay": "Barangay 22-C",
+      "population": 8248,
+      "barangay_normalized": "Barangay 22-C"
+    },
+    {
+      "barangay": "Barangay 23-C",
+      "population": 17876,
+      "barangay_normalized": "Barangay 23-C"
+    },
+    {
+      "barangay": "Barangay 24-C",
+      "population": 2001,
+      "barangay_normalized": "Barangay 24-C"
+    },
+    {
+      "barangay": "Barangay 25-C",
+      "population": 2388,
+      "barangay_normalized": "Barangay 25-C"
+    },
+    {
+      "barangay": "Barangay 26-C",
+      "population": 1511,
+      "barangay_normalized": "Barangay 26-C"
+    },
+    {
+      "barangay": "Barangay 27-C",
+      "population": 2106,
+      "barangay_normalized": "Barangay 27-C"
+    },
+    {
+      "barangay": "Barangay 28-C",
+      "population": 3639,
+      "barangay_normalized": "Barangay 28-C"
+    },
+    {
+      "barangay": "Barangay 29-C",
+      "population": 587,
+      "barangay_normalized": "Barangay 29-C"
+    },
+    {
+      "barangay": "Barangay 30-C",
+      "population": 922,
+      "barangay_normalized": "Barangay 30-C"
+    },
+    {
+      "barangay": "Barangay 31-D",
+      "population": 9022,
+      "barangay_normalized": "Barangay 31-D"
+    },
+    {
+      "barangay": "Barangay 32-D",
+      "population": 1633,
+      "barangay_normalized": "Barangay 32-D"
+    },
+    {
+      "barangay": "Barangay 33-D",
+      "population": 1738,
+      "barangay_normalized": "Barangay 33-D"
+    },
+    {
+      "barangay": "Barangay 34-D",
+      "population": 1094,
+      "barangay_normalized": "Barangay 34-D"
+    },
+    {
+      "barangay": "Barangay 35-D",
+      "population": 431,
+      "barangay_normalized": "Barangay 35-D"
+    },
+    {
+      "barangay": "Barangay 36-D",
+      "population": 1326,
+      "barangay_normalized": "Barangay 36-D"
+    },
+    {
+      "barangay": "Barangay 37-D",
+      "population": 5726,
+      "barangay_normalized": "Barangay 37-D"
+    },
+    {
+      "barangay": "Barangay 38-D",
+      "population": 1349,
+      "barangay_normalized": "Barangay 38-D"
+    },
+    {
+      "barangay": "Barangay 39-D",
+      "population": 4316,
+      "barangay_normalized": "Barangay 39-D"
+    },
+    {
+      "barangay": "Barangay 40-D",
+      "population": 2190,
+      "barangay_normalized": "Barangay 40-D"
+    },
+    {
+      "barangay": "Bato",
+      "population": 12669,
+      "barangay_normalized": "Bato"
+    },
+    {
+      "barangay": "Bayabas",
+      "population": 4365,
+      "barangay_normalized": "Bayabas"
+    },
+    {
+      "barangay": "Biao Escuela",
+      "population": 4499,
+      "barangay_normalized": "Biao Escuela"
+    },
+    {
+      "barangay": "Biao Guianga",
+      "population": 4846,
+      "barangay_normalized": "Biao Guianga"
+    },
+    {
+      "barangay": "Biao Joaquin",
+      "population": 3010,
+      "barangay_normalized": "Biao Joaquin"
+    },
+    {
+      "barangay": "Binugao",
+      "population": 8651,
+      "barangay_normalized": "Binugao"
+    },
+    {
+      "barangay": "Bucana",
+      "population": 83192,
+      "barangay_normalized": "Bucana"
+    },
+    {
+      "barangay": "Buda",
+      "population": 2401,
+      "barangay_normalized": "Buda"
+    },
+    {
+      "barangay": "Buhangin",
+      "population": 70979,
+      "barangay_normalized": "Buhangin"
+    },
+    {
+      "barangay": "Bunawan",
+      "population": 23111,
+      "barangay_normalized": "Bunawan"
+    },
+    {
+      "barangay": "Cabantian",
+      "population": 48805,
+      "barangay_normalized": "Cabantian"
+    },
+    {
+      "barangay": "Cadalian",
+      "population": 3079,
+      "barangay_normalized": "Cadalian"
+    },
+    {
+      "barangay": "Calinan",
+      "population": 24780,
+      "barangay_normalized": "Calinan"
+    },
+    {
+      "barangay": "Callawa",
+      "population": 4044,
+      "barangay_normalized": "Callawa"
+    },
+    {
+      "barangay": "Camansi",
+      "population": 1480,
+      "barangay_normalized": "Camansi"
+    },
+    {
+      "barangay": "Carmen",
+      "population": 2626,
+      "barangay_normalized": "Carmen"
+    },
+    {
+      "barangay": "Catalunan Grande",
+      "population": 42868,
+      "barangay_normalized": "Catalunan Grande"
+    },
+    {
+      "barangay": "Catalunan Pequeño",
+      "population": 29445,
+      "barangay_normalized": "Catalunan Pequeño"
+    },
+    {
+      "barangay": "Catigan",
+      "population": 4082,
+      "barangay_normalized": "Catigan"
+    },
+    {
+      "barangay": "Cawayan",
+      "population": 3207,
+      "barangay_normalized": "Cawayan"
+    },
+    {
+      "barangay": "Centro (San Juan)",
+      "population": 17024,
+      "barangay_normalized": "Centro (San Juan)"
+    },
+    {
+      "barangay": "Colosas",
+      "population": 6256,
+      "barangay_normalized": "Colosas"
+    },
+    {
+      "barangay": "Communal",
+      "population": 16894,
+      "barangay_normalized": "Communal"
+    },
+    {
+      "barangay": "Crossing Bayabas",
+      "population": 12021,
+      "barangay_normalized": "Crossing Bayabas"
+    },
+    {
+      "barangay": "Dacudao",
+      "population": 6135,
+      "barangay_normalized": "Dacudao"
+    },
+    {
+      "barangay": "Dalag",
+      "population": 2364,
+      "barangay_normalized": "Dalag"
+    },
+    {
+      "barangay": "Dalagdag",
+      "population": 1000,
+      "barangay_normalized": "Dalagdag"
+    },
+    {
+      "barangay": "Daliao",
+      "population": 21365,
+      "barangay_normalized": "Daliao"
+    },
+    {
+      "barangay": "Daliaon Plantation",
+      "population": 4087,
+      "barangay_normalized": "Daliaon Plantation"
+    },
+    {
+      "barangay": "Datu Salumay",
+      "population": 1920,
+      "barangay_normalized": "Datu Salumay"
+    },
+    {
+      "barangay": "Dominga",
+      "population": 1614,
+      "barangay_normalized": "Dominga"
+    },
+    {
+      "barangay": "Dumoy",
+      "population": 21900,
+      "barangay_normalized": "Dumoy"
+    },
+    {
+      "barangay": "Eden",
+      "population": 2542,
+      "barangay_normalized": "Eden"
+    },
+    {
+      "barangay": "Fatima (Benowang)",
+      "population": 3917,
+      "barangay_normalized": "Fatima"
+    },
+    {
+      "barangay": "Gatungan",
+      "population": 1875,
+      "barangay_normalized": "Gatungan"
+    },
+    {
+      "barangay": "Gov. Paciano Bangoy",
+      "population": 7669,
+      "barangay_normalized": "Gov. Paciano Bangoy"
+    },
+    {
+      "barangay": "Gov. Vicente Duterte",
+      "population": 7851,
+      "barangay_normalized": "Gov. Vicente Duterte"
+    },
+    {
+      "barangay": "Gumalang",
+      "population": 6519,
+      "barangay_normalized": "Gumalang"
+    },
+    {
+      "barangay": "Gumitan",
+      "population": 2476,
+      "barangay_normalized": "Gumitan"
+    },
+    {
+      "barangay": "Ilang",
+      "population": 25990,
+      "barangay_normalized": "Ilang"
+    },
+    {
+      "barangay": "Inayangan",
+      "population": 4630,
+      "barangay_normalized": "Inayangan"
+    },
+    {
+      "barangay": "Indangan",
+      "population": 26521,
+      "barangay_normalized": "Indangan"
+    },
+    {
+      "barangay": "Kap. Tomas Monteverde Sr.",
+      "population": 5036,
+      "barangay_normalized": "Kap. Tomas Monteverde Sr."
+    },
+    {
+      "barangay": "Kilate",
+      "population": 1522,
+      "barangay_normalized": "Kilate"
+    },
+    {
+      "barangay": "Lacson",
+      "population": 6108,
+      "barangay_normalized": "Lacson"
+    },
+    {
+      "barangay": "Lamanan",
+      "population": 4229,
+      "barangay_normalized": "Lamanan"
+    },
+    {
+      "barangay": "Lampianao",
+      "population": 1319,
+      "barangay_normalized": "Lampianao"
+    },
+    {
+      "barangay": "Langub",
+      "population": 4597,
+      "barangay_normalized": "Langub"
+    },
+    {
+      "barangay": "Lapu-lapu",
+      "population": 13046,
+      "barangay_normalized": "Lapu-lapu"
+    },
+    {
+      "barangay": "Leon Garcia Sr.",
+      "population": 13053,
+      "barangay_normalized": "Leon Garcia Sr."
+    },
+    {
+      "barangay": "Lizada",
+      "population": 24701,
+      "barangay_normalized": "Lizada"
+    },
+    {
+      "barangay": "Los Amigos",
+      "population": 12338,
+      "barangay_normalized": "Los Amigos"
+    },
+    {
+      "barangay": "Lubogan",
+      "population": 14315,
+      "barangay_normalized": "Lubogan"
+    },
+    {
+      "barangay": "Lumiad",
+      "population": 1738,
+      "barangay_normalized": "Lumiad"
+    },
+    {
+      "barangay": "Ma-a",
+      "population": 61565,
+      "barangay_normalized": "Ma-a"
+    },
+    {
+      "barangay": "Mabuhay",
+      "population": 1686,
+      "barangay_normalized": "Mabuhay"
+    },
+    {
+      "barangay": "Magsaysay",
+      "population": 3752,
+      "barangay_normalized": "Magsaysay"
+    },
+    {
+      "barangay": "Magtuod",
+      "population": 5220,
+      "barangay_normalized": "Magtuod"
+    },
+    {
+      "barangay": "Mahayag",
+      "population": 7404,
+      "barangay_normalized": "Mahayag"
+    },
+    {
+      "barangay": "Malabog",
+      "population": 14221,
+      "barangay_normalized": "Malabog"
+    },
+    {
+      "barangay": "Malagos",
+      "population": 8230,
+      "barangay_normalized": "Malagos"
+    },
+    {
+      "barangay": "Malamba",
+      "population": 6966,
+      "barangay_normalized": "Malamba"
+    },
+    {
+      "barangay": "Manambulan",
+      "population": 3716,
+      "barangay_normalized": "Manambulan"
+    },
+    {
+      "barangay": "Mandug",
+      "population": 16284,
+      "barangay_normalized": "Mandug"
+    },
+    {
+      "barangay": "Manuel Guianga",
+      "population": 4336,
+      "barangay_normalized": "Manuel Guianga"
+    },
+    {
+      "barangay": "Mapula",
+      "population": 4471,
+      "barangay_normalized": "Mapula"
+    },
+    {
+      "barangay": "Marapangi",
+      "population": 8284,
+      "barangay_normalized": "Marapangi"
+    },
+    {
+      "barangay": "Marilog",
+      "population": 20852,
+      "barangay_normalized": "Marilog"
+    },
+    {
+      "barangay": "Matina Aplaya",
+      "population": 33531,
+      "barangay_normalized": "Matina Aplaya"
+    },
+    {
+      "barangay": "Matina Biao",
+      "population": 3302,
+      "barangay_normalized": "Matina Biao"
+    },
+    {
+      "barangay": "Matina Crossing",
+      "population": 39797,
+      "barangay_normalized": "Matina Crossing"
+    },
+    {
+      "barangay": "Matina Pangi",
+      "population": 22277,
+      "barangay_normalized": "Matina Pangi"
+    },
+    {
+      "barangay": "Megkawayan",
+      "population": 2668,
+      "barangay_normalized": "Megkawayan"
+    },
+    {
+      "barangay": "Mintal",
+      "population": 17546,
+      "barangay_normalized": "Mintal"
+    },
+    {
+      "barangay": "Mudiang",
+      "population": 5940,
+      "barangay_normalized": "Mudiang"
+    },
+    {
+      "barangay": "Mulig",
+      "population": 7455,
+      "barangay_normalized": "Mulig"
+    },
+    {
+      "barangay": "New Carmen",
+      "population": 3028,
+      "barangay_normalized": "New Carmen"
+    },
+    {
+      "barangay": "New Valencia",
+      "population": 2231,
+      "barangay_normalized": "New Valencia"
+    },
+    {
+      "barangay": "Pampanga",
+      "population": 16786,
+      "barangay_normalized": "Pampanga"
+    },
+    {
+      "barangay": "Panacan",
+      "population": 42200,
+      "barangay_normalized": "Panacan"
+    },
+    {
+      "barangay": "Panalum",
+      "population": 1936,
+      "barangay_normalized": "Panalum"
+    },
+    {
+      "barangay": "Pandaitan",
+      "population": 4684,
+      "barangay_normalized": "Pandaitan"
+    },
+    {
+      "barangay": "Pangyan",
+      "population": 2358,
+      "barangay_normalized": "Pangyan"
+    },
+    {
+      "barangay": "Paquibato",
+      "population": 3105,
+      "barangay_normalized": "Paquibato"
+    },
+    {
+      "barangay": "Paradise Embak",
+      "population": 3338,
+      "barangay_normalized": "Paradise Embak"
+    },
+    {
+      "barangay": "Rafael Castillo",
+      "population": 5785,
+      "barangay_normalized": "Rafael Castillo"
+    },
+    {
+      "barangay": "Riverside",
+      "population": 6767,
+      "barangay_normalized": "Riverside"
+    },
+    {
+      "barangay": "Salapawan",
+      "population": 2660,
+      "barangay_normalized": "Salapawan"
+    },
+    {
+      "barangay": "Salaysay",
+      "population": 5926,
+      "barangay_normalized": "Salaysay"
+    },
+    {
+      "barangay": "Saloy",
+      "population": 2862,
+      "barangay_normalized": "Saloy"
+    },
+    {
+      "barangay": "San Antonio",
+      "population": 12801,
+      "barangay_normalized": "San Antonio"
+    },
+    {
+      "barangay": "San Isidro (Licanan)",
+      "population": 7266,
+      "barangay_normalized": "San Isidro"
+    },
+    {
+      "barangay": "Santo Niño",
+      "population": 22080,
+      "barangay_normalized": "Santo Niño"
+    },
+    {
+      "barangay": "Sasa",
+      "population": 52702,
+      "barangay_normalized": "Sasa"
+    },
+    {
+      "barangay": "Sibulan",
+      "population": 2529,
+      "barangay_normalized": "Sibulan"
+    },
+    {
+      "barangay": "Sirawan",
+      "population": 8207,
+      "barangay_normalized": "Sirawan"
+    },
+    {
+      "barangay": "Sirib",
+      "population": 8155,
+      "barangay_normalized": "Sirib"
+    },
+    {
+      "barangay": "Suawan (Tuli)",
+      "population": 5696,
+      "barangay_normalized": "Suawan"
+    },
+    {
+      "barangay": "Subasta",
+      "population": 6206,
+      "barangay_normalized": "Subasta"
+    },
+    {
+      "barangay": "Sumimao",
+      "population": 1897,
+      "barangay_normalized": "Sumimao"
+    },
+    {
+      "barangay": "Tacunan",
+      "population": 14005,
+      "barangay_normalized": "Tacunan"
+    },
+    {
+      "barangay": "Tagakpan",
+      "population": 4976,
+      "barangay_normalized": "Tagakpan"
+    },
+    {
+      "barangay": "Tagluno",
+      "population": 1869,
+      "barangay_normalized": "Tagluno"
+    },
+    {
+      "barangay": "Tagurano",
+      "population": 1426,
+      "barangay_normalized": "Tagurano"
+    },
+    {
+      "barangay": "Talandang",
+      "population": 3705,
+      "barangay_normalized": "Talandang"
+    },
+    {
+      "barangay": "Talomo",
+      "population": 65379,
+      "barangay_normalized": "Talomo"
+    },
+    {
+      "barangay": "Talomo River",
+      "population": 9442,
+      "barangay_normalized": "Talomo River"
+    },
+    {
+      "barangay": "Tamayong",
+      "population": 8036,
+      "barangay_normalized": "Tamayong"
+    },
+    {
+      "barangay": "Tambobong",
+      "population": 6912,
+      "barangay_normalized": "Tambobong"
+    },
+    {
+      "barangay": "Tamugan",
+      "population": 9897,
+      "barangay_normalized": "Tamugan"
+    },
+    {
+      "barangay": "Tapak",
+      "population": 8131,
+      "barangay_normalized": "Tapak"
+    },
+    {
+      "barangay": "Tawan-Tawan",
+      "population": 4866,
+      "barangay_normalized": "Tawan-tawan"
+    },
+    {
+      "barangay": "Tibuloy",
+      "population": 2981,
+      "barangay_normalized": "Tibuloy"
+    },
+    {
+      "barangay": "Tibungco",
+      "population": 50466,
+      "barangay_normalized": "Tibungco"
+    },
+    {
+      "barangay": "Tigatto",
+      "population": 23973,
+      "barangay_normalized": "Tigatto"
+    },
+    {
+      "barangay": "Toril",
+      "population": 12600,
+      "barangay_normalized": "Toril"
+    },
+    {
+      "barangay": "Tugbok",
+      "population": 25244,
+      "barangay_normalized": "Tugbok"
+    },
+    {
+      "barangay": "Tungakalan",
+      "population": 3227,
+      "barangay_normalized": "Tungakalan"
+    },
+    {
+      "barangay": "Ubalde",
+      "population": 2386,
+      "barangay_normalized": "Ubalde"
+    },
+    {
+      "barangay": "Ula",
+      "population": 8021,
+      "barangay_normalized": "Ula"
+    },
+    {
+      "barangay": "Vicente Hizon Sr.",
+      "population": 11179,
+      "barangay_normalized": "Vicente Hizon Sr."
+    },
+    {
+      "barangay": "Waan",
+      "population": 4293,
+      "barangay_normalized": "Waan"
+    },
+    {
+      "barangay": "Wangan",
+      "population": 6707,
+      "barangay_normalized": "Wangan"
+    },
+    {
+      "barangay": "Wilfredo Aquino",
+      "population": 7902,
+      "barangay_normalized": "Wilfredo Aquino"
+    },
+    {
+      "barangay": "Wines",
+      "population": 2965,
+      "barangay_normalized": "Wines"
+    }
+  ]
+}

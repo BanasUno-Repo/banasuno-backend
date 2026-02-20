@@ -1,21 +1,17 @@
 /**
- * Heuristic heat-risk model (rule-based "AI").
- * Uses PAGASA heat index categories (temperature °C) as the basis for risk levels.
- * Source: https://www.pagasa.dost.gov.ph/weather/heat-index
+ * Heat-risk model (rule-based).
+ * Validated path: NOAA Rothfusz heat index (NWS SR 90-23) when humidity is available → PAGASA categories.
+ * Fallback: air temperature (°C) → PAGASA categories.
+ * PAGASA: https://www.pagasa.dost.gov.ph/weather/heat-index
  *
- * PAGASA categories:
+ * PAGASA categories (heat index °C):
  *   Not Hazardous:  < 27°C
  *   Caution:        27–32°C
  *   Extreme Caution: 33–41°C
  *   Danger:         42–51°C
  *   Extreme Danger: ≥ 52°C
- *
- * Temperature input: barangay-level temperatures (e.g. from Meteosource per centroid).
  */
-
-function clamp(x, min, max) {
-  return Math.min(max, Math.max(min, x));
-}
+import { heatIndexRothfusz } from "../lib/heatIndex.js";
 
 function round1(x) {
   return Math.round(x * 10) / 10;
@@ -45,26 +41,36 @@ function tempToPAGASALevel(tempC) {
 
 /**
  * Assess heat risk per barangay using PAGASA heat index categories.
- * Uses barangay-level temperatures (e.g. from Meteosource per centroid).
+ * Score uses only validated inputs: heat index (or air temp) → PAGASA level → score = (level − 1) / 4.
+ * No delta or density in score; delta_c, population, density are reported for information only.
  *
  * @param {{ [barangayId: string]: number }} temperatures - Barangay-level temps (°C), e.g. from Meteosource
- * @param {{ averageTemp?: number }} opts - Optional city average (e.g. from WeatherAPI) for delta adjustment
+ * @param {{ averageTemp?: number, humidityByBarangay?: { [id: string]: number }, populationDensityByBarangay?: { [id: string]: { population: number, density: number } } }} opts - Optional city average (for delta_c only); optional RH % (enables validated NOAA heat index); optional population/density (reported only)
  * @returns {{
- *   risks: { [barangayId: string]: { score: number, level: number, label: string, temp_c: number, delta_c: number } },
+ *   risks: { [barangayId: string]: { score: number, level: number, label: string, temp_c: number, heat_index_c?: number, delta_c: number, population?: number, density?: number } },
  *   averageTemp: number | undefined,
  *   minScore: number | undefined,
  *   maxScore: number | undefined,
- *   counts: { not_hazardous: number, caution: number, extreme_caution: number, danger: number, extreme_danger: number },
- *   legend: Array<{ level: number, label: string, range: string, color: string }>,
- *   basis: string
+ *   counts: object,
+ *   legend: array,
+ *   basis: string,
+ *   usedHeatIndex: boolean
  * }}
  */
+/** Score from validated level only: level 1→0, 2→0.25, 3→0.5, 4→0.75, 5→1 (no delta/density in score). */
+function scoreFromLevel(level) {
+  return (level - 1) / 4;
+}
+
 export function assessBarangayHeatRisk(temperatures, opts = {}) {
   const entries = Object.entries(temperatures || {}).filter(([, v]) => typeof v === "number");
   const computedAvg =
     entries.length ? entries.reduce((sum, [, v]) => sum + v, 0) / entries.length : undefined;
   const avg = typeof opts.averageTemp === "number" ? opts.averageTemp : computedAvg;
+  const humidityByBarangay = opts.humidityByBarangay || {};
+  const popDensity = opts.populationDensityByBarangay || {};
 
+  let usedHeatIndex = false;
   const risks = {};
   const counts = { not_hazardous: 0, caution: 0, extreme_caution: 0, danger: 0, extreme_danger: 0 };
   const countKey = (label) => label.toLowerCase().replace(/\s+/g, "_");
@@ -72,23 +78,35 @@ export function assessBarangayHeatRisk(temperatures, opts = {}) {
   let maxScore;
 
   for (const [id, temp] of entries) {
-    const pagasa = tempToPAGASALevel(temp);
+    const rh = humidityByBarangay[id];
+    const useHi = typeof rh === "number" && rh >= 0 && rh <= 100;
+    const inputForPAGASA = useHi ? heatIndexRothfusz(temp, rh) : temp;
+    if (useHi) usedHeatIndex = true;
+
+    const pagasa = tempToPAGASALevel(inputForPAGASA);
+    const score = scoreFromLevel(pagasa.level);
     const delta = typeof avg === "number" ? temp - avg : 0;
-    const deltaAdj = typeof avg === "number" ? clamp(delta * 0.03, -0.15, 0.15) : 0;
-    const score = clamp(pagasa.score + deltaAdj, 0, 1);
+    const pd = popDensity[id];
 
     risks[id] = {
       score: round1(score),
       level: pagasa.level,
       label: pagasa.label,
       temp_c: round1(temp),
+      ...(useHi ? { heat_index_c: round1(inputForPAGASA) } : {}),
       delta_c: round1(delta),
+      ...(pd ? { population: pd.population, density: round1(pd.density) } : {}),
     };
 
     counts[countKey(pagasa.label)] += 1;
     minScore = minScore == null ? score : Math.min(minScore, score);
     maxScore = maxScore == null ? score : Math.max(maxScore, score);
   }
+
+  const basis =
+    usedHeatIndex
+      ? "NOAA Rothfusz (NWS SR 90-23) → PAGASA level → score = (level−1)/4. Refs: docs/HEAT-RISK-MODEL-BASIS.md"
+      : "PAGASA level (air temp) → score = (level−1)/4. Add humidity for validated heat index. Refs: docs/HEAT-RISK-MODEL-BASIS.md";
 
   return {
     risks,
@@ -97,7 +115,8 @@ export function assessBarangayHeatRisk(temperatures, opts = {}) {
     maxScore: maxScore == null ? undefined : round1(maxScore),
     counts,
     legend: HEAT_LEVELS,
-    basis: "PAGASA heat index (https://www.pagasa.dost.gov.ph/weather/heat-index)",
+    basis,
+    usedHeatIndex,
   };
 }
 

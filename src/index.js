@@ -21,7 +21,7 @@ app.use(express.json());
 app.use((req, res, next) => {
   res.set("Access-Control-Allow-Origin", corsOrigin);
   res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.set("Access-Control-Allow-Headers", "Content-Type, x-pipeline-report-key");
   if (req.method === "OPTIONS") return res.sendStatus(204);
   next();
 });
@@ -42,6 +42,11 @@ app.get("/api", (req, res) => {
       "GET /api/heat/:cityId/barangay-temperatures": "Barangay temperatures for heat map (cityId: davao)",
       "GET /api/heat/:cityId/barangay-heat-risk": "Barangay temperatures + heuristic heat-risk assessment (optional ?limit=)",
       "GET /api/heat/:cityId/forecast": "7- or 14-day forecast from WeatherAPI (cityId: davao, query: ?days=7|14)",
+      "GET /api/heat/:cityId/barangay-population": "Population and density per barangay (PSA + GeoJSON area) for AI pipeline (cityId: davao)",
+      "GET /api/heat/:cityId/pipeline-report/meta": "Disclaimer, sources, validity, updatedAt for pipeline report (for UI)",
+      "GET /api/heat/:cityId/pipeline-report": "Download latest pipeline heat-risk report CSV (cityId: davao); 404 if none uploaded",
+      "POST /api/heat/:cityId/pipeline-report/generate": "Generate pipeline report on demand (heat + facilities + density, K-Means); then download via GET pipeline-report",
+      "POST /api/heat/:cityId/pipeline-report": "Upload pipeline report CSV (body: text/csv; optional x-pipeline-report-key if PIPELINE_REPORT_WRITER_KEY set)",
     },
   });
 });

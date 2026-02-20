@@ -3,11 +3,13 @@
 Fetch data from backend APIs for the weighted heat risk pipeline.
 
 - GET /api/heat/davao/barangay-temperatures → temperatures per barangay
-- GET /api/facilities/by-barangay/:id → facility count per barangay
+- GET /api/heat/davao/barangay-heat-risk → when available, heat_index_c (validated NOAA Rothfusz) is used as temperature for the pipeline
+- GET /api/facilities/by-barangay/:id (or batch) → facility count per barangay
+- GET /api/heat/davao/barangay-population → population, density
 
-Writes CSV with columns: barangay_id, date, temperature, facility_distance.
-facility_distance is set to
-1/(1+facility_count) so fewer facilities → higher value (higher risk proxy).
+Writes CSV with columns: barangay_id, date, temperature, facility_distance, population, density.
+temperature: heat index °C when backend returns it (validated); else air temp °C.
+facility_distance = 1/(1+facility_count). population/density from barangay-population.
 
 Requires: BACKEND_URL (e.g. http://localhost:3000)
 """
@@ -31,6 +33,35 @@ def get_barangay_temperatures(base_url: str, timeout: int = 120) -> dict[str, fl
     data = r.json()
     temps = data.get("temperatures") or {}
     return {str(k): float(v) for k, v in temps.items() if v is not None}
+
+
+def get_barangay_heat_risk(base_url: str, timeout: int = 120) -> tuple[dict[str, float], bool, str]:
+    """
+    Fetch barangay heat-risk from backend. When backend used humidity, risks include heat_index_c (validated).
+    Returns (barangay_id -> value to use as temperature, used_heat_index, temperatures_source).
+    value = heat_index_c when present, else temp_c.
+    temperatures_source = "meteosource" (per-barangay) or "weatherapi" (city average for all) or "".
+    """
+    url = f"{base_url.rstrip('/')}/api/heat/davao/barangay-heat-risk"
+    r = requests.get(url, timeout=timeout)
+    r.raise_for_status()
+    data = r.json()
+    risks = data.get("risks") or {}
+    out: dict[str, float] = {}
+    used_hi = False
+    for bid, risk in risks.items():
+        if not isinstance(risk, dict):
+            continue
+        # Prefer validated heat index when backend computed it
+        hi = risk.get("heat_index_c")
+        temp = risk.get("temp_c")
+        if isinstance(hi, (int, float)):
+            out[str(bid)] = float(hi)
+            used_hi = True
+        elif isinstance(temp, (int, float)):
+            out[str(bid)] = float(temp)
+    temperatures_source = (data.get("meta") or {}).get("temperaturesSource") or ""
+    return out, used_hi, temperatures_source
 
 
 def get_facility_count(base_url: str, barangay_id: str) -> int:
@@ -57,6 +88,28 @@ def get_facility_counts_batch(base_url: str, barangay_ids: list[str], timeout: i
 def facility_count_to_distance(facility_count: int) -> float:
     """Convert facility count to a risk proxy: fewer facilities = higher value (like distance)."""
     return 1.0 / (1.0 + facility_count)
+
+
+def get_barangay_population_density(base_url: str, timeout: int = 30) -> dict[str, dict]:
+    """Fetch population and density per barangay. Returns { barangay_id: { population, density } }."""
+    url = f"{base_url.rstrip('/')}/api/heat/davao/barangay-population"
+    r = requests.get(url, timeout=timeout)
+    r.raise_for_status()
+    data = r.json()
+    if not isinstance(data, dict):
+        return {}
+    out: dict[str, dict] = {}
+    for k, v in data.items():
+        if not isinstance(v, dict):
+            out[str(k)] = {"population": 0, "density": 0.0}
+            continue
+        try:
+            pop = int(v.get("population", 0) or 0)
+            dens = float(v.get("density", 0) or 0)
+        except (TypeError, ValueError):
+            pop, dens = 0, 0.0
+        out[str(k)] = {"population": pop, "density": dens}
+    return out
 
 
 def main() -> int:
@@ -93,12 +146,48 @@ def main() -> int:
     base_url = args.backend.rstrip("/")
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
-    print(f"Requesting temperatures from {base_url} (timeout={args.timeout}s) ...", flush=True)
-    try:
-        temperatures = get_barangay_temperatures(base_url, timeout=args.timeout)
-    except requests.RequestException as e:
-        print(f"Error fetching temperatures: {e}", file=sys.stderr)
-        return 1
+    # Fetch heat and population in parallel (heat is the long pole; population is fast).
+    print(f"Requesting heat and population from {base_url} (timeout={args.timeout}s) ...", flush=True)
+    temperatures: dict[str, float] = {}
+    used_heat_index = False
+    population_density: dict[str, dict] = {}
+
+    def fetch_heat() -> tuple[dict[str, float], bool, str]:
+        try:
+            return get_barangay_heat_risk(base_url, timeout=args.timeout)
+        except requests.RequestException:
+            return ({}, False, "")
+
+    def fetch_population() -> dict[str, dict]:
+        try:
+            return get_barangay_population_density(base_url, timeout=min(60, args.timeout))
+        except (requests.RequestException, AttributeError, TypeError, ValueError):
+            return {}
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        fut_heat = executor.submit(fetch_heat)
+        fut_pop = executor.submit(fetch_population)
+        temperatures, used_heat_index, temperatures_source = fut_heat.result()
+        population_density = fut_pop.result()
+
+    if not temperatures:
+        try:
+            temperatures = get_barangay_temperatures(base_url, timeout=args.timeout)
+            print("  Using temperatures from barangay-temperatures (source unknown).", flush=True)
+        except requests.RequestException as e:
+            print(f"Error fetching temperatures: {e}", file=sys.stderr)
+            return 1
+    else:
+        if temperatures_source == "meteosource":
+            print("  Per-barangay temperatures (Meteosource live).", flush=True)
+        elif temperatures_source == "weatherapi":
+            print("  City average applied to all barangays (WeatherAPI fallback).", flush=True)
+        else:
+            print("  Using temperatures from barangay-heat-risk.", flush=True)
+        if used_heat_index:
+            print("  Heat index (validated) used as temperature.", flush=True)
+    if not population_density:
+        print("  Population/density not available, using 0 for pipeline.", flush=True)
 
     if not temperatures:
         print("No barangay temperatures returned from API.", file=sys.stderr)
@@ -140,6 +229,8 @@ def main() -> int:
             "date": today,
             "temperature": round(temp, 2),
             "facility_distance": round(facility_count_to_distance(facility_counts.get(barangay_id, 0)), 6),
+            "population": population_density.get(barangay_id, {}).get("population", 0),
+            "density": round(population_density.get(barangay_id, {}).get("density", 0), 4),
         }
         for barangay_id, temp in temperatures.items()
     ]
